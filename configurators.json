@@ -1,0 +1,766 @@
+{
+  "mexican-chicken-rice-bowl": {
+    "slots": [
+      {
+        "id": "grain",
+        "label": "Grain",
+        "default": "white-rice",
+        "options": [
+          {
+            "id": "white-rice",
+            "label": "White Rice"
+          },
+          {
+            "id": "brown-rice",
+            "label": "Brown Rice"
+          },
+          {
+            "id": "cauli-rice",
+            "label": "Cauliflower Rice"
+          }
+        ]
+      },
+      {
+        "id": "protein",
+        "label": "Protein",
+        "default": "chicken",
+        "options": [
+          {
+            "id": "chicken",
+            "label": "Chicken"
+          },
+          {
+            "id": "shrimp",
+            "label": "Shrimp"
+          },
+          {
+            "id": "tofu",
+            "label": "Tofu"
+          }
+        ]
+      },
+      {
+        "id": "topping",
+        "label": "Topping",
+        "default": "avocado",
+        "options": [
+          {
+            "id": "avocado",
+            "label": "Avocado"
+          },
+          {
+            "id": "feta",
+            "label": "Feta"
+          },
+          {
+            "id": "crema",
+            "label": "Crema"
+          }
+        ]
+      }
+    ],
+    "base": [
+      "½ cup (90g) cooked black beans",
+      "¼ cup (40g) corn kernels",
+      "3 tbsp pico de gallo",
+      "Pickled jalapeño slices",
+      "Fresh lime wedge"
+    ],
+    "proteins": {
+      "chicken": {
+        "label": "Chicken",
+        "gramLabel": "150g",
+        "spiceNote": "Cumin-forward, smoky, lime-bright",
+        "ingredients": [
+          "150g boneless chicken breast",
+          "1 tsp cumin",
+          "½ tsp smoked paprika",
+          "½ tsp garlic powder",
+          "Juice of ½ lime",
+          "1 tsp avocado oil"
+        ],
+        "method": "Sear or grill over medium-high heat, 6–7 min per side until cooked through. Rest 5 min before slicing against the grain.",
+        "nutrition": {
+          "cal": 248,
+          "protein": 35,
+          "fat": 8,
+          "carbs": 2,
+          "fiber": 0
+        }
+      },
+      "shrimp": {
+        "label": "Shrimp",
+        "gramLabel": "200g",
+        "spiceNote": "Chili-lime, quick and bright",
+        "ingredients": [
+          "200g shrimp, peeled and deveined",
+          "1 tsp chili powder",
+          "½ tsp garlic powder",
+          "Zest of 1 lime",
+          "Juice of ½ lime",
+          "1 tsp avocado oil"
+        ],
+        "method": "Cook in a very hot pan, 2–3 min per side until pink and just curled. Do not overcook — shrimp go from perfect to rubbery fast.",
+        "nutrition": {
+          "cal": 196,
+          "protein": 28,
+          "fat": 5,
+          "carbs": 2,
+          "fiber": 0
+        }
+      },
+      "tofu": {
+        "label": "Tofu",
+        "gramLabel": "200g",
+        "spiceNote": "Smoky adobo, crispy edges",
+        "ingredients": [
+          "200g extra-firm tofu, pressed 30 min",
+          "1 tbsp adobo sauce (from chipotle can)",
+          "½ tsp smoked paprika",
+          "½ tsp cumin",
+          "1 tsp avocado oil"
+        ],
+        "method": "Press 30 min to remove moisture. Cube, coat well in adobo and spices, and roast at 425°F / 220°C for 25–28 min, flipping halfway, until the edges are deeply crispy.",
+        "nutrition": {
+          "cal": 192,
+          "protein": 18,
+          "fat": 12,
+          "carbs": 5,
+          "fiber": 1
+        }
+      }
+    },
+    "grains": {
+      "white-rice": {
+        "label": "White Rice",
+        "ingredients": [
+          "¾ cup (140g) cooked white rice",
+          "1 tbsp fresh cilantro, chopped"
+        ],
+        "note": null,
+        "nutrition": {
+          "cal": 182,
+          "protein": 3,
+          "fat": 0,
+          "carbs": 40,
+          "fiber": 1
+        }
+      },
+      "brown-rice": {
+        "label": "Brown Rice",
+        "ingredients": [
+          "¾ cup (140g) cooked brown rice",
+          "1 tbsp fresh cilantro, chopped"
+        ],
+        "note": "Nuttier and more filling. Add 5 min to your prep if cooking from scratch.",
+        "nutrition": {
+          "cal": 193,
+          "protein": 4,
+          "fat": 2,
+          "carbs": 40,
+          "fiber": 3
+        }
+      },
+      "cauli-rice": {
+        "label": "Cauliflower Rice",
+        "ingredients": [
+          "1½ cups (170g) cauliflower, riced",
+          "½ tsp cumin",
+          "1 tsp avocado oil"
+        ],
+        "note": "Low-carb swap. Sauté the riced cauliflower with cumin and a pinch of salt for 5–6 min until tender and lightly golden — don't skip this step or it tastes raw.",
+        "nutrition": {
+          "cal": 55,
+          "protein": 3,
+          "fat": 3,
+          "carbs": 8,
+          "fiber": 3
+        }
+      }
+    },
+    "toppings": {
+      "avocado": {
+        "label": "Avocado",
+        "ingredients": [
+          "½ ripe avocado, sliced"
+        ],
+        "chefNote": null,
+        "nutrition": {
+          "cal": 120,
+          "protein": 1,
+          "fat": 11,
+          "carbs": 6,
+          "fiber": 4
+        }
+      },
+      "feta": {
+        "label": "Feta",
+        "ingredients": [
+          "30g feta cheese, crumbled",
+          "Pinch of dried oregano",
+          "Light drizzle of olive oil"
+        ],
+        "chefNote": "Feta shifts the bowl toward a saltier, Mediterranean finish. Swap the cilantro in the rice for flat-leaf parsley or fresh mint — the herb should match the cheese.",
+        "nutrition": {
+          "cal": 79,
+          "protein": 5,
+          "fat": 6,
+          "carbs": 1,
+          "fiber": 0
+        }
+      },
+      "crema": {
+        "label": "Crema",
+        "ingredients": [
+          "3 tbsp Mexican crema",
+          "2–3 drops hot sauce"
+        ],
+        "chefNote": "Crema makes it richer, so you need more acid to balance. Squeeze the lime generously, double the pico, and don't skip the pickled jalapeño.",
+        "nutrition": {
+          "cal": 63,
+          "protein": 1,
+          "fat": 6,
+          "carbs": 1,
+          "fiber": 0
+        }
+      }
+    },
+    "baseNutrition": {
+      "cal": 105,
+      "protein": 6,
+      "fat": 1,
+      "carbs": 18,
+      "fiber": 5
+    }
+  },
+  "lebanese-chicken-farro-bowl": {
+    "slots": [
+      {
+        "id": "grain",
+        "label": "Grain",
+        "default": "farro",
+        "options": [
+          {
+            "id": "farro",
+            "label": "Farro"
+          },
+          {
+            "id": "brown-rice",
+            "label": "Brown Rice"
+          },
+          {
+            "id": "white-rice",
+            "label": "White Rice"
+          }
+        ]
+      },
+      {
+        "id": "protein",
+        "label": "Protein",
+        "default": "chicken",
+        "options": [
+          {
+            "id": "chicken",
+            "label": "Chicken Thigh"
+          },
+          {
+            "id": "salmon",
+            "label": "Salmon"
+          },
+          {
+            "id": "cod",
+            "label": "Cod"
+          },
+          {
+            "id": "tofu",
+            "label": "Tofu"
+          }
+        ]
+      },
+      {
+        "id": "topping",
+        "label": "Topping",
+        "default": "yogurt",
+        "options": [
+          {
+            "id": "yogurt",
+            "label": "Lemon-Garlic Yogurt"
+          },
+          {
+            "id": "tahini",
+            "label": "Tahini Drizzle"
+          },
+          {
+            "id": "labneh",
+            "label": "Labneh"
+          }
+        ]
+      }
+    ],
+    "base": [
+      "1 cucumber, diced",
+      "125g cherry tomatoes, halved",
+      "½ red onion, thinly sliced",
+      "120g roasted chickpeas (crispy)",
+      "60g cultured kraut",
+      "1 soft-boiled egg, halved",
+      "2 tbsp parsley, chopped",
+      "Pinch sumac (optional)"
+    ],
+    "proteins": {
+      "chicken": {
+        "label": "Chicken Thigh",
+        "gramLabel": "250g",
+        "spiceNote": "Za'atar & cumin, warm & bright",
+        "ingredients": [
+          "250g chicken thigh meat",
+          "1 tsp za'atar",
+          "½ tsp cumin",
+          "Juice of ½ lemon",
+          "1 tsp olive oil",
+          "Black pepper"
+        ],
+        "method": "Pan-sear the thighs skin-side down over medium-high heat until golden and cooked through, 6–7 min per side. Rest 5 min, then slice. Toss with za'atar, cumin, lemon, and pepper.",
+        "nutrition": {
+          "cal": 290,
+          "protein": 32,
+          "fat": 16,
+          "carbs": 2,
+          "fiber": 0
+        }
+      },
+      "salmon": {
+        "label": "Salmon",
+        "gramLabel": "200g",
+        "spiceNote": "Dill & lemon, silky & rich",
+        "ingredients": [
+          "200g salmon fillet",
+          "½ tsp dried dill",
+          "Zest of ½ lemon",
+          "Juice of ½ lemon",
+          "1 tsp olive oil",
+          "Salt & pepper"
+        ],
+        "method": "Sear skin-side down in a hot pan for 4–5 min until the skin is crispy. Flip and cook 2–3 min more until just cooked through. Break into chunks and toss with dill, lemon, and salt.",
+        "nutrition": {
+          "cal": 280,
+          "protein": 30,
+          "fat": 17,
+          "carbs": 1,
+          "fiber": 0
+        }
+      },
+      "cod": {
+        "label": "Cod",
+        "gramLabel": "250g",
+        "spiceNote": "Subtle, clean, lets other flavors shine",
+        "ingredients": [
+          "250g cod fillet",
+          "1 tsp sumac",
+          "Juice of ½ lemon",
+          "1 tsp olive oil",
+          "Salt & pepper"
+        ],
+        "method": "Poach gently in simmering salted water with lemon slices for 6–8 min until opaque and flakes easily. Drain, break into chunks, and toss with sumac, lemon juice, and a pinch of salt.",
+        "nutrition": {
+          "cal": 188,
+          "protein": 40,
+          "fat": 2,
+          "carbs": 1,
+          "fiber": 0
+        }
+      },
+      "tofu": {
+        "label": "Tofu",
+        "gramLabel": "280g",
+        "spiceNote": "Smoky za'atar, crispy pan-fried",
+        "ingredients": [
+          "280g extra-firm tofu, pressed 30 min",
+          "1 tsp za'atar",
+          "½ tsp sumac",
+          "Juice of ½ lemon",
+          "2 tsp olive oil"
+        ],
+        "method": "Press for 30 min. Cube and pan-fry in olive oil over medium-high heat until golden on all sides, 8–10 min total. Toss with za'atar, sumac, lemon juice, and salt.",
+        "nutrition": {
+          "cal": 180,
+          "protein": 20,
+          "fat": 10,
+          "carbs": 4,
+          "fiber": 2
+        }
+      }
+    },
+    "grains": {
+      "farro": {
+        "label": "Farro",
+        "ingredients": [
+          "¾ cup (120g) cooked farro"
+        ],
+        "note": "Nutty, chewy, holds sauce beautifully. Cook 25–30 min in salted water.",
+        "nutrition": {
+          "cal": 158,
+          "protein": 6,
+          "fat": 1,
+          "carbs": 28,
+          "fiber": 5
+        }
+      },
+      "brown-rice": {
+        "label": "Brown Rice",
+        "ingredients": [
+          "¾ cup (140g) cooked brown rice"
+        ],
+        "note": "Earthier and chewier than white rice. Add 5 min to cook time.",
+        "nutrition": {
+          "cal": 193,
+          "protein": 4,
+          "fat": 2,
+          "carbs": 40,
+          "fiber": 3
+        }
+      },
+      "white-rice": {
+        "label": "White Rice",
+        "ingredients": [
+          "¾ cup (140g) cooked white rice"
+        ],
+        "note": "Lighter, faster. Good if you want the toppings to shine.",
+        "nutrition": {
+          "cal": 182,
+          "protein": 3,
+          "fat": 0,
+          "carbs": 40,
+          "fiber": 1
+        }
+      }
+    },
+    "toppings": {
+      "yogurt": {
+        "label": "Lemon-Garlic Yogurt",
+        "ingredients": [
+          "120g Greek yogurt",
+          "1 tbsp lemon juice",
+          "1 garlic clove, grated",
+          "1 tbsp parsley",
+          "Pinch salt"
+        ],
+        "chefNote": "The signature sauce — tangy, garlicky, essential. Drizzle generously.",
+        "nutrition": {
+          "cal": 72,
+          "protein": 11,
+          "fat": 1,
+          "carbs": 4,
+          "fiber": 0
+        }
+      },
+      "tahini": {
+        "label": "Tahini Drizzle",
+        "ingredients": [
+          "2 tbsp tahini",
+          "1 tbsp lemon juice",
+          "1 garlic clove, minced",
+          "2 tbsp water"
+        ],
+        "chefNote": "Nuttier, richer. Whisk tahini with lemon, garlic, and water until pourable. Drizzle over the bowl.",
+        "nutrition": {
+          "cal": 178,
+          "protein": 6,
+          "fat": 16,
+          "carbs": 5,
+          "fiber": 3
+        }
+      },
+      "labneh": {
+        "label": "Labneh",
+        "ingredients": [
+          "60g labneh (strained yogurt)",
+          "Pinch za'atar",
+          "Drizzle olive oil"
+        ],
+        "chefNote": "Thicker, tangier yogurt. A dollop goes a long way. Add sumac if you have it.",
+        "nutrition": {
+          "cal": 110,
+          "protein": 5,
+          "fat": 8,
+          "carbs": 3,
+          "fiber": 0
+        }
+      }
+    },
+    "baseNutrition": {
+      "cal": 145,
+      "protein": 8,
+      "fat": 3,
+      "carbs": 24,
+      "fiber": 6
+    }
+  },
+  "miso-shrimp-rice-bowl": {
+    "slots": [
+      {
+        "id": "grain",
+        "label": "Grain",
+        "default": "brown-rice",
+        "options": [
+          {
+            "id": "brown-rice",
+            "label": "Brown Rice"
+          },
+          {
+            "id": "white-rice",
+            "label": "White Rice"
+          },
+          {
+            "id": "cauli-rice",
+            "label": "Cauliflower Rice"
+          }
+        ]
+      },
+      {
+        "id": "protein",
+        "label": "Protein",
+        "default": "shrimp",
+        "options": [
+          {
+            "id": "shrimp",
+            "label": "Shrimp"
+          },
+          {
+            "id": "scallops",
+            "label": "Scallops"
+          },
+          {
+            "id": "salmon",
+            "label": "Salmon"
+          },
+          {
+            "id": "cod",
+            "label": "Cod"
+          }
+        ]
+      },
+      {
+        "id": "topping",
+        "label": "Topping",
+        "default": "miso",
+        "options": [
+          {
+            "id": "miso",
+            "label": "White Miso Glaze"
+          },
+          {
+            "id": "ponzu",
+            "label": "Ponzu Glaze"
+          },
+          {
+            "id": "shoyu",
+            "label": "Soy & Ginger"
+          }
+        ]
+      }
+    ],
+    "base": [
+      "100g broccoli florets",
+      "150g snap peas",
+      "150g green beans",
+      "½ yellow onion, sliced",
+      "1 soft-boiled egg, halved",
+      "2 scallions, sliced",
+      "½ cucumber, quick-pickled",
+      "1 tbsp furikake",
+      "Nori strips"
+    ],
+    "proteins": {
+      "shrimp": {
+        "label": "Shrimp",
+        "gramLabel": "340g",
+        "spiceNote": "Miso-glazed, umami, quick-cooking",
+        "ingredients": [
+          "340g shrimp, peeled & deveined",
+          "1 tbsp white miso",
+          "1 tsp soy sauce",
+          "1 tsp mirin",
+          "1 tsp ginger, grated",
+          "1 tsp oil"
+        ],
+        "method": "Sauté in a hot pan with oil for 1 min per side until pink. Do not overcook — shrimp go from perfect to rubbery in seconds. Toss with the miso glaze for 30–60 seconds.",
+        "nutrition": {
+          "cal": 196,
+          "protein": 28,
+          "fat": 5,
+          "carbs": 4,
+          "fiber": 0
+        }
+      },
+      "scallops": {
+        "label": "Scallops",
+        "gramLabel": "300g",
+        "spiceNote": "Delicate, sweet, miso-forward",
+        "ingredients": [
+          "300g large scallops, pat dry",
+          "1 tbsp white miso",
+          "1 tsp soy sauce",
+          "1 tsp mirin",
+          "½ tsp ginger, grated",
+          "1 tsp oil"
+        ],
+        "method": "Pat the scallops completely dry — moisture prevents browning. Sear in a very hot pan with oil for 2 min per side until golden and just cooked through. Toss lightly with the miso glaze.",
+        "nutrition": {
+          "cal": 168,
+          "protein": 28,
+          "fat": 4,
+          "carbs": 3,
+          "fiber": 0
+        }
+      },
+      "salmon": {
+        "label": "Salmon",
+        "gramLabel": "220g",
+        "spiceNote": "Rich, buttery, teriyaki-style glaze",
+        "ingredients": [
+          "220g salmon fillet",
+          "1 tbsp soy sauce",
+          "1 tsp mirin",
+          "½ tsp ginger, grated",
+          "½ tsp grated garlic",
+          "1 tsp oil"
+        ],
+        "method": "Sear skin-side down for 4 min until crispy. Flip and cook 2–3 min more. Brush with a quick soy-mirin glaze. Break into chunks.",
+        "nutrition": {
+          "cal": 280,
+          "protein": 30,
+          "fat": 17,
+          "carbs": 2,
+          "fiber": 0
+        }
+      },
+      "cod": {
+        "label": "Cod",
+        "gramLabel": "280g",
+        "spiceNote": "Clean, delicate, ponzu-forward",
+        "ingredients": [
+          "280g cod fillet",
+          "1 tbsp ponzu",
+          "1 tsp mirin",
+          "½ tsp ginger, grated",
+          "1 tsp oil"
+        ],
+        "method": "Pan-sear gently for 3–4 min per side until just cooked through — do not overcook. Brush lightly with ponzu-mirin glaze. Break into chunks.",
+        "nutrition": {
+          "cal": 210,
+          "protein": 44,
+          "fat": 2,
+          "carbs": 2,
+          "fiber": 0
+        }
+      }
+    },
+    "grains": {
+      "brown-rice": {
+        "label": "Brown Rice",
+        "ingredients": [
+          "150g cooked brown rice"
+        ],
+        "note": "The classic choice. Nutty, chewy, supports the umami sauce.",
+        "nutrition": {
+          "cal": 193,
+          "protein": 4,
+          "fat": 2,
+          "carbs": 40,
+          "fiber": 3
+        }
+      },
+      "white-rice": {
+        "label": "White Rice",
+        "ingredients": [
+          "150g cooked white rice"
+        ],
+        "note": "Lighter, cleaner. Good if you want the vegetables and sauce to take center stage.",
+        "nutrition": {
+          "cal": 195,
+          "protein": 3,
+          "fat": 0,
+          "carbs": 43,
+          "fiber": 1
+        }
+      },
+      "cauli-rice": {
+        "label": "Cauliflower Rice",
+        "ingredients": [
+          "280g riced cauliflower, sautéed"
+        ],
+        "note": "Low-carb swap. Sauté with a splash of soy sauce and ginger for 5 min.",
+        "nutrition": {
+          "cal": 62,
+          "protein": 3,
+          "fat": 3,
+          "carbs": 10,
+          "fiber": 3
+        }
+      }
+    },
+    "toppings": {
+      "miso": {
+        "label": "White Miso Glaze",
+        "ingredients": [
+          "2 tbsp white miso",
+          "1 tbsp mirin",
+          "1 tbsp soy sauce",
+          "1 tbsp rice vinegar",
+          "1 tbsp water",
+          "1 tsp ginger"
+        ],
+        "chefNote": "The signature glaze. Rich umami that coats the protein and vegetables. Whisk smooth before using.",
+        "nutrition": {
+          "cal": 68,
+          "protein": 3,
+          "fat": 1,
+          "carbs": 12,
+          "fiber": 0
+        }
+      },
+      "ponzu": {
+        "label": "Ponzu Glaze",
+        "ingredients": [
+          "2 tbsp ponzu",
+          "1 tbsp mirin",
+          "1 tsp ginger",
+          "Pinch chili flakes (optional)"
+        ],
+        "chefNote": "Brighter, more citrus-forward. Pairs beautifully with delicate fish like cod.",
+        "nutrition": {
+          "cal": 42,
+          "protein": 1,
+          "fat": 0,
+          "carbs": 10,
+          "fiber": 0
+        }
+      },
+      "shoyu": {
+        "label": "Soy & Ginger",
+        "ingredients": [
+          "2 tbsp soy sauce",
+          "1 tbsp mirin",
+          "1 tsp ginger, grated",
+          "1 tsp sesame oil"
+        ],
+        "chefNote": "Simple and direct. Ginger and sesame add warmth. Drizzle over the bowl at the end.",
+        "nutrition": {
+          "cal": 74,
+          "protein": 2,
+          "fat": 4,
+          "carbs": 8,
+          "fiber": 0
+        }
+      }
+    },
+    "baseNutrition": {
+      "cal": 165,
+      "protein": 10,
+      "fat": 2,
+      "carbs": 28,
+      "fiber": 7
+    }
+  }
+}

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Karla:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="recipes.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { background: oklch(0.975 0.008 80); }
+    ::selection { background: oklch(0.6 0.13 42 / 0.18); }
+  </style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="--bg: oklch(0.975 0.008 80); --surface: oklch(0.995 0.005 85); --ink: oklch(0.27 0.012 55); --muted: oklch(0.52 0.014 58); --faint: oklch(0.66 0.012 60); --line: oklch(0.9 0.01 72); --accent: oklch(0.58 0.13 42); --accent-deep: oklch(0.47 0.12 40); --accent-soft: oklch(0.94 0.04 55); --sage: oklch(0.52 0.06 150); min-height: 100vh; background: var(--bg); color: var(--ink); font-family: 'Karla', system-ui, sans-serif; -webkit-font-smoothing: antialiased;">
+
+  <header style="position: sticky; top: 0; z-index: 50; background: oklch(0.975 0.008 80 / 0.86); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 16px 32px; display: flex; align-items: baseline; justify-content: space-between; gap: 24px;">
+      <div onClick="{{ goHome }}" style="display: flex; align-items: baseline; gap: 14px; cursor: pointer;">
+        <span style="font-family: 'Spectral', serif; font-weight: 600; font-size: 23px; letter-spacing: -0.01em; color: var(--ink);">Heirloom Kitchen</span>
+        <span style="font-family: 'Space Mono', monospace; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);">from masa, outward</span>
+      </div>
+      <button onClick="{{ goHome }}" style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: none; border: none; cursor: pointer; padding: 4px 0;" style-hover="{ color: 'var(--accent)' }">All recipes</button>
+    </div>
+  </header>
+
+  <sc-if value="{{ isIndex }}" hint-placeholder-val="{{ true }}">
+  <main style="max-width: 1120px; margin: 0 auto; padding: 0 32px 96px;">
+
+    <section style="padding: 56px 0 40px; border-bottom: 1px solid var(--line);">
+      <p style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin: 0 0 18px;">The Collection</p>
+      <h1 style="font-family: 'Spectral', serif; font-weight: 600; font-size: clamp(38px, 6vw, 64px); line-height: 1.02; letter-spacing: -0.02em; margin: 0; max-width: 16ch;">Recipes worth passing down.</h1>
+      <p style="font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 54ch; margin: 22px 0 0;">Started with a bag of masa harina and never quite stopped — empanadas, tostadas, sopes, and the muffins that crept in along the way. A living cookbook, synced straight from the kitchen notebook.</p>
+    </section>
+
+    <section style="position: sticky; top: 57px; z-index: 40; background: oklch(0.975 0.008 80 / 0.92); backdrop-filter: blur(8px); padding: 22px 0 18px; margin: 0 -32px; padding-left: 32px; padding-right: 32px; border-bottom: 1px solid var(--line);">
+      <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+        <div style="position: relative; flex: 1; min-width: 240px;">
+          <span style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 15px; color: var(--faint); pointer-events: none;">⌕</span>
+          <input value="{{ query }}" onInput="{{ onSearch }}" placeholder="Search recipes by name…" style="width: 100%; padding: 12px 16px 12px 38px; font-family: 'Karla', sans-serif; font-size: 15px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 3px; outline: none;" style-focus="{ borderColor: 'var(--accent)' }" />
+        </div>
+        <button onClick="{{ toggleFavOnly }}" style="{{ favBtnStyle }}">♥ Favorites <span style="font-family: 'Space Mono', monospace; font-size: 11px; opacity: 0.7;">{{ favCount }}</span></button>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 22px; margin-top: 16px;">
+        <sc-for list="{{ filterGroups }}" as="group" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); margin-right: 2px;">{{ group.label }}</span>
+            <sc-for list="{{ group.options }}" as="opt" hint-placeholder-count="3">
+              <button onClick="{{ opt.onClick }}" style="{{ opt.style }}">{{ opt.label }}</button>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="padding-top: 28px;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 22px;">
+        <p style="font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: var(--muted); margin: 0;">{{ resultLabel }}</p>
+        <button onClick="{{ clearFilters }}" style="{{ clearStyle }}">Clear filters ✕</button>
+      </div>
+
+      <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(258px, 1fr)); gap: 26px;">
+        <sc-for list="{{ cards }}" as="r" hint-placeholder-count="6">
+          <article onClick="{{ r.open }}" style="position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; transition: transform 0.18s ease, box-shadow 0.18s ease;" style-hover="{ transform: 'translateY(-3px)', boxShadow: '0 14px 30px -16px oklch(0.4 0.05 50 / 0.45)' }">
+            <button onClick="{{ r.toggleFav }}" style="{{ r.heartStyle }}">{{ r.heart }}</button>
+            <div style="{{ r.thumbStyle }}">
+              <span style="{{ r.emojiStyle }}">{{ r.emoji }}</span>
+            </div>
+            <div style="padding: 16px 17px 18px; display: flex; flex-direction: column; gap: 9px; flex: 1;">
+              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);">{{ r.metaLabel }}</span>
+              <h3 style="font-family: 'Spectral', serif; font-weight: 600; font-size: 21px; line-height: 1.15; letter-spacing: -0.01em; margin: 0; color: var(--ink);">{{ r.name }}</h3>
+              <div style="margin-top: auto; padding-top: 6px; display: flex; align-items: center; gap: 12px; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted);">
+                <span>◷ {{ r.totalLabel }}</span>
+                <span style="width: 3px; height: 3px; border-radius: 50%; background: var(--faint);"></span>
+                <span>{{ r.difficulty }}</span>
+                <span style="width: 3px; height: 3px; border-radius: 50%; background: var(--faint);"></span>
+                <span>{{ r.batchLabel }}</span>
+              </div>
+              <sc-if value="{{ showTags }}" hint-placeholder-val="{{ true }}">
+                <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+                  <sc-for list="{{ r.tags }}" as="t" hint-placeholder-count="2">
+                    <span style="font-family: 'Karla', sans-serif; font-size: 11px; font-weight: 500; color: var(--sage); border: 1px solid oklch(0.52 0.06 150 / 0.35); border-radius: 999px; padding: 2px 9px; white-space: nowrap;">{{ t }}</span>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align: center; padding: 80px 20px; border: 1px dashed var(--line); border-radius: 6px;">
+          <p style="font-family: 'Spectral', serif; font-size: 24px; color: var(--ink); margin: 0 0 8px;">Nothing on the menu.</p>
+          <p style="color: var(--muted); margin: 0 0 22px;">No recipes match those filters yet.</p>
+          <button onClick="{{ clearFilters }}" style="font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: var(--surface); background: var(--accent); border: none; border-radius: 3px; padding: 11px 20px; cursor: pointer;">Clear all filters</button>
+        </div>
+      </sc-if>
+    </section>
+  </main>
+  </sc-if>
+
+  <sc-if value="{{ isRecipe }}" hint-placeholder-val="{{ false }}">
+  <main style="max-width: 980px; margin: 0 auto; padding: 32px 32px 110px;">
+    <button onClick="{{ goHome }}" style="font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: var(--muted); background: none; border: none; cursor: pointer; padding: 6px 0; margin-bottom: 30px;" style-hover="{ color: 'var(--accent)' }">← All recipes</button>
+
+    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;">
+      <div style="flex: 1;">
+        <p style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin: 0 0 16px;">{{ r.metaLabel }}</p>
+        <h1 style="font-family: 'Spectral', serif; font-weight: 600; font-size: clamp(34px, 5.5vw, 54px); line-height: 1.04; letter-spacing: -0.02em; margin: 0; max-width: 18ch;">{{ r.name }}</h1>
+        <p style="font-size: 17px; line-height: 1.62; color: var(--muted); max-width: 56ch; margin: 20px 0 0;">{{ r.blurb }}</p>
+      </div>
+      <button onClick="{{ r.toggleFav }}" style="{{ r.detailHeartStyle }}">{{ r.heart }} {{ r.favWord }}</button>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px;">
+      <sc-for list="{{ r.tags }}" as="t" hint-placeholder-count="3">
+        <span style="font-family: 'Karla', sans-serif; font-size: 12.5px; font-weight: 500; color: var(--sage); border: 1px solid oklch(0.52 0.06 150 / 0.35); border-radius: 999px; padding: 4px 12px;">{{ t }}</span>
+      </sc-for>
+    </div>
+
+    <div style="{{ r.heroStyle }}">
+      <span style="{{ r.heroEmojiStyle }}">{{ r.emoji }}</span>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 0; margin: 34px 0 8px; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; background: var(--surface);">
+      <sc-for list="{{ r.meta }}" as="m" hint-placeholder-count="5">
+        <div style="flex: 1; min-width: 108px; padding: 16px 18px; border-right: 1px solid var(--line);">
+          <p style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); margin: 0 0 7px;">{{ m.label }}</p>
+          <p style="font-family: 'Spectral', serif; font-size: 19px; font-weight: 500; color: var(--ink); margin: 0;">{{ m.value }}</p>
+        </div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ r.hasCfg }}" hint-placeholder-val="{{ false }}">
+    <div style="margin: 28px 0 0; background: var(--accent-soft); border-radius: 6px; padding: 24px 26px 20px; border: 1px solid oklch(0.58 0.13 42 / 0.18);">
+      <p style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-deep); margin: 0 0 20px;">Build Your Bowl</p>
+
+      <sc-for list="{{ r.cfg.slotRows }}" as="cfgSlot" hint-placeholder-count="3">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 13px; flex-wrap: wrap;">
+          <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); width: 52px; flex: none;">{{ cfgSlot.label }}</span>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <sc-for list="{{ cfgSlot.pills }}" as="pill" hint-placeholder-count="3">
+              <button onClick="{{ pill.onClick }}" style="{{ pill.style }}">{{ pill.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+
+      <sc-if value="{{ r.cfg.hasChefNote }}" hint-placeholder-val="{{ false }}">
+        <p style="font-family: 'Spectral', serif; font-size: 15px; font-style: italic; line-height: 1.6; color: var(--muted); margin: 18px 0 0; padding-top: 16px; border-top: 1px solid oklch(0.58 0.13 42 / 0.2);">{{ r.cfg.chefNote }}</p>
+      </sc-if>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 0; margin-top: 18px; padding-top: 16px; border-top: 1px solid oklch(0.58 0.13 42 / 0.2);">
+        <sc-for list="{{ r.cfg.macros }}" as="mac" hint-placeholder-count="5">
+          <div style="flex: 1; min-width: 72px; padding-right: 16px; padding-bottom: 2px;">
+            <p style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin: 0 0 4px;">{{ mac.label }}</p>
+            <p style="font-family: 'Spectral', serif; font-size: 22px; font-weight: 500; color: var(--ink); margin: 0;">{{ mac.value }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <div style="display: grid; grid-template-columns: 0.95fr 1.45fr; gap: 56px; margin-top: 48px; align-items: start;">
+      <aside style="position: sticky; top: 96px;">
+        <h2 style="font-family: 'Spectral', serif; font-weight: 600; font-size: 24px; margin: 0; border-bottom: 2px solid var(--ink); padding-bottom: 10px;">Ingredients</h2>
+
+        <div style="display: flex; align-items: center; gap: 10px; margin: 16px 0 20px; flex-wrap: wrap;">
+          <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);">{{ r.servingsLabel }}</span>
+          <div style="display: flex; gap: 4px; margin-left: auto; background: oklch(0.93 0.01 70); border-radius: 4px; padding: 3px;">
+            <sc-for list="{{ r.scaleOptions }}" as="s" hint-placeholder-count="4">
+              <button onClick="{{ s.onClick }}" style="{{ s.style }}">{{ s.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+
+        <sc-for list="{{ r.ingredientSections }}" as="sec" hint-placeholder-count="2">
+          <sc-if value="{{ sec.hasHeader }}" hint-placeholder-val="{{ false }}">
+            <p style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-deep); margin: 16px 0 6px;">{{ sec.h }}</p>
+          </sc-if>
+          <ul style="list-style: none; margin: 0 0 4px; padding: 0; display: flex; flex-direction: column;">
+            <sc-for list="{{ sec.items }}" as="ing" hint-placeholder-count="6">
+              <li style="display: flex; gap: 11px; padding: 9px 0; border-bottom: 1px solid var(--line); align-items: baseline;">
+                <span style="width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex: none; transform: translateY(-2px);"></span>
+                <span style="font-size: 14.5px; line-height: 1.4; color: var(--ink);">{{ ing }}</span>
+              </li>
+            </sc-for>
+          </ul>
+        </sc-for>
+      </aside>
+
+      <section>
+        <h2 style="font-family: 'Spectral', serif; font-weight: 600; font-size: 24px; margin: 0 0 8px; border-bottom: 2px solid var(--ink); padding-bottom: 10px;">Method</h2>
+        <sc-if value="{{ r.hasCfgMethodNote }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top: 18px; margin-bottom: -8px; background: oklch(0.93 0.01 70); border-radius: 4px; padding: 14px 18px;">
+            <p style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-deep); margin: 0 0 6px;">{{ r.cfg.cfgProteinLabel }}</p>
+            <p style="font-size: 15.5px; line-height: 1.58; color: var(--ink); margin: 0;">{{ r.cfg.cfgMethodNote }}</p>
+          </div>
+        </sc-if>
+        <div style="display: flex; flex-direction: column; gap: 26px; margin-top: 26px;">
+          <sc-for list="{{ r.stepSections }}" as="sec" hint-placeholder-count="2">
+            <sc-if value="{{ sec.hasHeader }}" hint-placeholder-val="{{ false }}">
+              <p style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-deep); margin: 4px 0 -8px;">{{ sec.h }}</p>
+            </sc-if>
+            <sc-for list="{{ sec.items }}" as="step" hint-placeholder-count="4">
+              <div style="display: flex; gap: 20px; align-items: flex-start;">
+                <span style="font-family: 'Spectral', serif; font-style: italic; font-weight: 600; font-size: 26px; color: var(--accent); line-height: 1; flex: none; width: 38px;">{{ step.num }}</span>
+                <p style="font-size: 16.5px; line-height: 1.62; color: var(--ink); margin: 3px 0 0;">{{ step.text }}</p>
+              </div>
+            </sc-for>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ r.hasNotes }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top: 44px; background: var(--accent-soft); border-radius: 6px; padding: 24px 26px; border: 1px solid oklch(0.58 0.13 42 / 0.18);">
+            <p style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-deep); margin: 0 0 12px;">From the notebook</p>
+            <p style="font-family: 'Spectral', serif; font-size: 17px; font-style: italic; line-height: 1.6; color: var(--ink); margin: 0;">{{ r.notes }}</p>
+          </div>
+        </sc-if>
+      </section>
+    </div>
+  </main>
+  </sc-if>
+
+  <footer style="border-top: 1px solid var(--line); padding: 40px 32px;">
+    <div style="max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+      <span style="font-family: 'Spectral', serif; font-size: 16px; color: var(--ink);">Heirloom Kitchen</span>
+      <span style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--faint);">synced from Notion · for friends &amp; family</span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;showDietTags&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot; },
+  &quot;defaultSort&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;Name&quot;, &quot;Cuisine&quot;, &quot;Quickest&quot;], &quot;default&quot;: &quot;Name&quot;, &quot;tsType&quot;: &quot;string&quot; }
+}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    let favs = [];
+    try { favs = JSON.parse(localStorage.getItem('hk_favs') || '[]'); } catch (e) {}
+    this.state = {
+      view: 'index', activeId: null, query: '',
+      cuisine: 'All', meal: 'All', difficulty: 'All', maxTime: 0,
+      favOnly: false, favs: favs, scale: 1,
+      cfgChoices: {},
+    };
+    this.rootRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this._onReady = () => {
+      const m = window.location.pathname.match(/^\/recipe\/([^/]+)$/);
+      if (m) this.setState({ view: 'recipe', activeId: m[1], scale: 1 });
+      this.forceUpdate();
+    };
+    window.addEventListener('hk-recipes-ready', this._onReady);
+    if (!window.HK_RECIPES) {
+      this._poll = setInterval(() => {
+        if (window.HK_RECIPES) { clearInterval(this._poll); this._poll = null; this.forceUpdate(); }
+      }, 80);
+    } else {
+      const m = window.location.pathname.match(/^\/recipe\/([^/]+)$/);
+      if (m) this.setState({ view: 'recipe', activeId: m[1], scale: 1 });
+    }
+    this._onPop = () => {
+      const m = window.location.pathname.match(/^\/recipe\/([^/]+)$/);
+      if (m) this.setState({ view: 'recipe', activeId: m[1], scale: 1 });
+      else this.setState({ view: 'index' });
+    };
+    window.addEventListener('popstate', this._onPop);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('hk-recipes-ready', this._onReady);
+    window.removeEventListener('popstate', this._onPop);
+    if (this._poll) clearInterval(this._poll);
+  }
+
+  recipes() { return window.HK_RECIPES || []; }
+
+  fmtMin(m) {
+    if (m < 60) return m + ' min';
+    const h = Math.floor(m / 60), r = m % 60;
+    return r ? h + 'h ' + r + 'm' : h + ' hr';
+  }
+
+  formatNum(n) {
+    if (Math.abs(n - Math.round(n)) < 1e-6) return String(Math.round(n));
+    const whole = Math.floor(n + 1e-9);
+    const rem = n - whole;
+    const table = [[0.125,'⅛'],[0.25,'¼'],[1/3,'⅓'],[0.375,'⅜'],[0.5,'½'],[0.625,'⅝'],[2/3,'⅔'],[0.75,'¾'],[0.875,'⅞']];
+    let best = null, bd = 0.045;
+    for (const t of table) { const d = Math.abs(rem - t[0]); if (d < bd) { bd = d; best = t; } }
+    if (best) return (whole ? whole : '') + best[1];
+    return String(Math.round(n * 100) / 100);
+  }
+
+  scaleLine(str, f) {
+    if (f === 1) return str;
+    const fchars = '½⅓⅔¼¾⅛⅜⅝⅞⅕⅖⅗⅘⅙⅚';
+    const frac = { '½':0.5,'⅓':1/3,'⅔':2/3,'¼':0.25,'¾':0.75,'⅛':0.125,'⅜':0.375,'⅝':0.625,'⅞':0.875,'⅕':0.2,'⅖':0.4,'⅗':0.6,'⅘':0.8,'⅙':1/6,'⅚':5/6 };
+    const re = new RegExp('(\\d+\\s*[' + fchars + '])|(\\d*\\.\\d+)|(\\d+)|([' + fchars + '])', 'g');
+    return str.replace(re, (m, p1, p2, p3, p4, offset, full) => {
+      const after = full.slice(offset + m.length);
+      if (/^\s*%/.test(after)) return m;
+      let val;
+      if (p1) { const fc = p1.trim().slice(-1); val = parseInt(p1, 10) + (frac[fc] || 0); }
+      else if (p2) { val = parseFloat(p2); }
+      else if (p3) { val = parseInt(p3, 10); }
+      else { val = frac[p4]; }
+      return this.formatNum(val * f);
+    });
+  }
+
+  chip(label, active, onClick) {
+    const base = "font-family: 'Karla', sans-serif; font-size: 13px; font-weight: 500; padding: 6px 13px; border-radius: 999px; cursor: pointer; transition: all 0.15s ease; ";
+    if (active) return { label, onClick, style: base + "background: var(--ink); color: var(--bg); border: 1px solid var(--ink);" };
+    return { label, onClick, style: base + "background: transparent; color: var(--muted); border: 1px solid var(--line);" };
+  }
+
+  metaLabelFor(r) {
+    const c = (r.cuisine && r.cuisine[0]) || r.recipeType || 'Recipe';
+    const m = (r.meal && r.meal[0]) || r.recipeType || '';
+    return m ? (c + ' · ' + m) : c;
+  }
+
+  renderVals() {
+    const all = this.recipes();
+    const S = this.state;
+    const showTags = this.props.showDietTags ?? true;
+    const sort = this.props.defaultSort ?? 'Name';
+    const setF = (k, v) => this.setState({ [k]: v });
+
+    let list = all.filter(r => {
+      if (S.query && !r.name.toLowerCase().includes(S.query.toLowerCase())) return false;
+      if (S.cuisine !== 'All' && !(r.cuisine || []).includes(S.cuisine)) return false;
+      if (S.meal !== 'All' && !(r.meal || []).includes(S.meal)) return false;
+      if (S.difficulty !== 'All' && r.difficulty !== S.difficulty) return false;
+      if (S.maxTime && (r.prep + r.cook) > S.maxTime) return false;
+      if (S.favOnly && !S.favs.includes(r.id)) return false;
+      return true;
+    });
+    if (sort === 'Cuisine') list = list.slice().sort((a, b) => (a.cuisine[0] || '').localeCompare(b.cuisine[0] || '') || a.name.localeCompare(b.name));
+    else if (sort === 'Quickest') list = list.slice().sort((a, b) => (a.prep + a.cook) - (b.prep + b.cook));
+    else list = list.slice().sort((a, b) => a.name.localeCompare(b.name));
+
+    const toggleFav = (id) => (e) => {
+      if (e) e.stopPropagation();
+      const has = S.favs.includes(id);
+      const next = has ? S.favs.filter(x => x !== id) : [...S.favs, id];
+      try { localStorage.setItem('hk_favs', JSON.stringify(next)); } catch (er) {}
+      this.setState({ favs: next });
+    };
+    const open = (id) => () => {
+      const ar2 = all.find(x => x.id === id);
+      let newCfgChoices = S.cfgChoices;
+      if (ar2 && ar2.configurator && !S.cfgChoices[id]) {
+        const defs = {};
+        ar2.configurator.slots.forEach(s => { defs[s.id] = s.default; });
+        newCfgChoices = { ...S.cfgChoices, [id]: defs };
+      }
+      history.pushState({}, '', '/recipe/' + id);
+      this.setState({ view: 'recipe', activeId: id, scale: 1, cfgChoices: newCfgChoices });
+      window.scrollTo(0, 0);
+    };
+
+    const tones = [
+      ['oklch(0.56 0.11 42)', 'oklch(0.46 0.1 40)'],
+      ['oklch(0.54 0.07 150)', 'oklch(0.44 0.06 150)'],
+      ['oklch(0.52 0.07 255)', 'oklch(0.43 0.06 255)'],
+      ['oklch(0.57 0.09 75)', 'oklch(0.47 0.08 70)'],
+      ['oklch(0.5 0.08 330)', 'oklch(0.42 0.07 330)'],
+    ];
+    const toneFor = (id) => { let h = 0; for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0; return tones[h % tones.length]; };
+
+    const cards = list.map(r => {
+      const isFav = S.favs.includes(r.id);
+      const [c1, c2] = toneFor(r.id);
+      return {
+        id: r.id, emoji: r.emoji, name: r.name, difficulty: r.difficulty,
+        metaLabel: this.metaLabelFor(r),
+        totalLabel: this.fmtMin(r.prep + r.cook),
+        batchLabel: this.formatNum(r.batch) + ' ' + r.unit,
+        tags: (r.diet || []).slice(0, 3),
+        heart: isFav ? '♥' : '♡',
+        heartStyle: "position: absolute; top: 11px; right: 11px; z-index: 2; width: 34px; height: 34px; border-radius: 50%; border: none; cursor: pointer; font-size: 16px; line-height: 1; display: flex; align-items: center; justify-content: center; background: oklch(1 0 0 / 0.86); backdrop-filter: blur(4px); color: " + (isFav ? 'var(--accent)' : 'oklch(0.5 0.02 60)') + "; box-shadow: 0 2px 8px oklch(0.3 0.03 50 / 0.18);",
+        thumbStyle: r.photo
+          ? "aspect-ratio: 4/3; background: url('" + r.photo + "') center/cover no-repeat;"
+          : "aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; background: linear-gradient(150deg, " + c1 + ", " + c2 + ");",
+        emojiStyle: r.photo ? "display: none;" : "font-size: 56px; line-height: 1; filter: saturate(1.05);",
+        open: open(r.id), toggleFav: toggleFav(r.id),
+      };
+    });
+
+    const uniqFlat = (key, order) => {
+      const set = new Set();
+      all.forEach(r => (r[key] || []).forEach(v => set.add(v)));
+      let arr = Array.from(set);
+      if (order) arr.sort((a, b) => { const ia = order.indexOf(a), ib = order.indexOf(b); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || a.localeCompare(b); });
+      else arr.sort();
+      return arr;
+    };
+    const cuisines = ['All', ...uniqFlat('cuisine')];
+    const meals = ['All', ...uniqFlat('meal', ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Side', 'Drink', 'Dessert', 'Meal Prep'])];
+    const diffs = ['All', 'Easy', 'Medium', 'Hard'];
+    const times = [{ l: 'Any', v: 0 }, { l: '≤30m', v: 30 }, { l: '≤45m', v: 45 }, { l: '≤60m', v: 60 }];
+    const filterGroups = [
+      { label: 'Cuisine', options: cuisines.map(c => this.chip(c, S.cuisine === c, () => setF('cuisine', c))) },
+      { label: 'Meal', options: meals.map(m => this.chip(m, S.meal === m, () => setF('meal', m))) },
+      { label: 'Difficulty', options: diffs.map(d => this.chip(d, S.difficulty === d, () => setF('difficulty', d))) },
+      { label: 'Time', options: times.map(t => this.chip(t.l, S.maxTime === t.v, () => setF('maxTime', t.v))) },
+    ];
+
+    const favBtnBase = "display: inline-flex; align-items: center; gap: 8px; font-family: 'Karla', sans-serif; font-size: 14px; font-weight: 600; padding: 11px 18px; border-radius: 3px; cursor: pointer; transition: all 0.15s ease; ";
+    const favBtnStyle = S.favOnly
+      ? favBtnBase + "background: var(--accent); color: var(--surface); border: 1px solid var(--accent);"
+      : favBtnBase + "background: var(--surface); color: var(--ink); border: 1px solid var(--line);";
+
+    const activeCount = (S.cuisine !== 'All') + (S.meal !== 'All') + (S.difficulty !== 'All') + (S.maxTime ? 1 : 0) + (S.query ? 1 : 0) + (S.favOnly ? 1 : 0);
+    const clearStyle = "font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: var(--muted); background: none; border: none; cursor: pointer; padding: 4px 0; opacity: " + (activeCount ? '1' : '0') + "; pointer-events: " + (activeCount ? 'auto' : 'none') + ";";
+
+    const ar = all.find(r => r.id === S.activeId);
+    let r = null;
+    if (ar) {
+      const isFav = S.favs.includes(ar.id);
+      const [c1, c2] = toneFor(ar.id);
+      const scaleOpts = [[0.5, '½×'], [1, '1×'], [2, '2×'], [3, '3×']].map(([v, l]) => {
+        const active = S.scale === v;
+        const base = "font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; padding: 6px 11px; border-radius: 3px; border: none; cursor: pointer; transition: all 0.15s ease; ";
+        return { label: l, onClick: () => this.setState({ scale: v }),
+          style: active ? base + "background: var(--surface); color: var(--accent); box-shadow: 0 1px 3px oklch(0.3 0.03 50 / 0.2);" : base + "background: transparent; color: var(--muted);" };
+      });
+      const cfgActive = !!ar.configurator;
+      const choices = cfgActive ? (S.cfgChoices[ar.id] || {}) : null;
+      let ingredientSections;
+      if (cfgActive && choices) {
+        const cfgD = ar.configurator;
+        const secs = [];
+        const prot = choices.protein && cfgD.proteins[choices.protein];
+        if (prot) secs.push({ h: prot.label, hasHeader: true, items: prot.ingredients.map(i => this.scaleLine(i, S.scale)) });
+        const grain = choices.grain && cfgD.grains[choices.grain];
+        if (grain) secs.push({ h: null, hasHeader: false, items: grain.ingredients.map(i => this.scaleLine(i, S.scale)) });
+        secs.push({ h: null, hasHeader: false, items: cfgD.base.map(i => this.scaleLine(i, S.scale)) });
+        const top = choices.topping && cfgD.toppings[choices.topping];
+        if (top) secs.push({ h: 'Topping', hasHeader: true, items: top.ingredients.map(i => this.scaleLine(i, S.scale)) });
+        ingredientSections = secs;
+      } else {
+        ingredientSections = (ar.ingredients || []).map(sec => ({
+          h: sec.h, hasHeader: !!sec.h,
+          items: sec.items.map(it => this.scaleLine(it, S.scale)),
+        }));
+      }
+      let counter = 0;
+      const stepSections = (ar.steps || []).map(sec => ({
+        h: sec.h, hasHeader: !!sec.h,
+        items: sec.items.map(t => ({ num: ++counter, text: t })),
+      }));
+      r = {
+        id: ar.id, emoji: ar.emoji, name: ar.name, blurb: ar.blurb, notes: ar.notes,
+        metaLabel: this.metaLabelFor(ar),
+        tags: (ar.diet || []).concat(ar.freezer ? ['Freezer-Friendly'] : []),
+        heart: isFav ? '♥' : '♡', favWord: isFav ? 'Saved' : 'Save',
+        toggleFav: toggleFav(ar.id),
+        detailHeartStyle: "display: inline-flex; align-items: center; gap: 8px; flex: none; font-family: 'Karla', sans-serif; font-size: 14px; font-weight: 600; padding: 10px 18px; border-radius: 3px; cursor: pointer; transition: all 0.15s ease; " + (isFav ? "background: var(--accent); color: var(--surface); border: 1px solid var(--accent);" : "background: var(--surface); color: var(--ink); border: 1px solid var(--line);"),
+        heroStyle: ar.photo
+          ? "margin-top: 34px; aspect-ratio: 16/6; border-radius: 6px; background: url('" + ar.photo + "') center/cover no-repeat;"
+          : "margin-top: 34px; aspect-ratio: 16/6; border-radius: 6px; display: flex; align-items: center; justify-content: center; background: linear-gradient(150deg, " + c1 + ", " + c2 + ");",
+        heroEmojiStyle: ar.photo ? "display: none;" : "font-size: clamp(72px, 14vw, 150px); line-height: 1;",
+        meta: [
+          { label: 'Prep', value: this.fmtMin(ar.prep) },
+          { label: 'Cook', value: this.fmtMin(ar.cook) },
+          { label: 'Total', value: this.fmtMin(ar.prep + ar.cook) },
+          { label: 'Difficulty', value: ar.difficulty },
+          { label: 'Makes', value: this.formatNum(ar.batch) + ' ' + ar.unit },
+        ],
+        servingsLabel: this.formatNum(ar.batch * S.scale) + ' ' + ar.unit,
+        scaleOptions: scaleOpts,
+        ingredientSections, stepSections,
+        hasNotes: !!ar.notes,
+        hasCfg: cfgActive,
+        hasCfgMethodNote: false,
+        cfg: null,
+      };
+
+      // ── Build configurator block ──────────────────────────────────────────
+      if (cfgActive && choices) {
+        const cfgData = ar.configurator;
+        const setChoice = (slotId, optId) => {
+          const curr = S.cfgChoices[ar.id] || {};
+          this.setState({ cfgChoices: { ...S.cfgChoices, [ar.id]: { ...curr, [slotId]: optId } } });
+        };
+        const pillBase = "font-family: 'Karla', sans-serif; font-weight: 600; border: none; border-radius: 999px; cursor: pointer; transition: all 0.14s ease; ";
+        const slotRows = cfgData.slots.map(slot => ({
+          id: slot.id, label: slot.label,
+          pills: slot.options.map(opt => {
+            const on = choices[slot.id] === opt.id;
+            return { id: opt.id, label: opt.label, onClick: () => setChoice(slot.id, opt.id),
+              style: pillBase + "font-size: 13.5px; padding: 7px 16px; " + (on ? "background: var(--ink); color: var(--bg);" : "background: oklch(0.93 0.01 70); color: var(--muted);") };
+          })
+        }));
+
+        const protData = choices.protein && cfgData.proteins[choices.protein];
+        const grainData = choices.grain && cfgData.grains[choices.grain];
+        const topData = choices.topping && cfgData.toppings[choices.topping];
+
+        const chefNote = (topData && topData.chefNote) || (grainData && grainData.note) || null;
+        const cfgMethodNote = protData ? protData.method : null;
+
+        const n = { cal: 0, protein: 0, fat: 0, carbs: 0, fiber: 0 };
+        const addN = (src, m) => { if (!src) return; ['cal','protein','fat','carbs','fiber'].forEach(k => n[k] += Math.round((src[k]||0)*m)); };
+        addN(cfgData.baseNutrition, S.scale);
+        addN(protData && protData.nutrition, S.scale);
+        addN(grainData && grainData.nutrition, S.scale);
+        addN(topData && topData.nutrition, S.scale);
+
+        const macros = [
+          { label: 'Calories', value: String(n.cal) },
+          { label: 'Protein',  value: n.protein + 'g' },
+          { label: 'Carbs',    value: n.carbs + 'g' },
+          { label: 'Fat',      value: n.fat + 'g' },
+          { label: 'Fiber',    value: n.fiber + 'g' },
+        ];
+
+        r.hasCfgMethodNote = !!cfgMethodNote;
+        r.cfg = { slotRows, macros, chefNote, hasChefNote: !!chefNote, cfgMethodNote, cfgProteinLabel: protData ? protData.label : '' };
+      }
+      // ─────────────────────────────────────────────────────────────────────
+    }
+
+    return {
+      rootRef: this.rootRef,
+      isIndex: S.view === 'index',
+      isRecipe: S.view === 'recipe' && !!r,
+      goHome: () => { history.pushState({}, '', '/'); this.setState({ view: 'index' }); window.scrollTo(0, 0); },
+      query: S.query,
+      onSearch: (e) => this.setState({ query: e.target.value }),
+      filterGroups, favBtnStyle, favCount: S.favs.length,
+      toggleFavOnly: () => this.setState({ favOnly: !S.favOnly }),
+      cards, showTags,
+      hasResults: list.length > 0,
+      noResults: all.length > 0 && list.length === 0,
+      resultLabel: list.length + (list.length === 1 ? ' recipe' : ' recipes'),
+      clearStyle,
+      clearFilters: () => this.setState({ query: '', cuisine: 'All', meal: 'All', difficulty: 'All', maxTime: 0, favOnly: false }),
+      r,
+    };
+  }
+}
+</script>
+</body>
+</html>
