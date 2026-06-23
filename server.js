@@ -34,8 +34,8 @@ app.get("/health", (_req, res) => res.send("ok"));
 
 // Static site. The frontend references ./support.js and ./recipes.js relatively.
 app.use(express.static(path.join(__dirname, "frontend")));
-// SPA catch-all: /recipe/:id and / all serve the same HTML; routing is client-side.
-app.get(/^(\/recipe\/[^/]+)?$/, (_req, res) =>
+// SPA: / and /recipe/:id both serve the same HTML; routing is client-side.
+app.get(["/", "/recipe/:id"], (_req, res) =>
   res.sendFile(path.join(__dirname, "frontend", "Heirloom Kitchen.dc.html"))
 );
 
